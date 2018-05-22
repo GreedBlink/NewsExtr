@@ -1,3 +1,3 @@
 # NewsExtr
 
-[](http://tika.apache.org/)
+[Tika Apache](http://tika.apache.org/)
