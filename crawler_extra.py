@@ -4,24 +4,8 @@ Created on Fri May 18 11:41:21 2018
 
 @author: jonatha.costa
 """
-import requests
-from bs4 import BeautifulSoup
-import pandas as pd
-import datetime
-import re
-import numpy  as np
-from readability import Document
-import requests
-from readability.readability import Document
-import time
 
 %run -i funcoes.py
-
-
-
-
-
-
 
 
 
@@ -41,30 +25,36 @@ while(r.status_code == 200):
     for i in range(len(teste)):
         if('https://extra.globo.com/noticias/'  in teste[i].attrs['href'] and 'html' in teste[i].attrs['href'] and '?page=' not in teste[i].attrs['href']):
             df_links =  df_links.append({'links_brutos':  teste[i].attrs['href']},ignore_index=True)
-
-
             
 df_links = df_links.drop_duplicates()
-df_links = df_links.reset_index(drop=True )        
-columns = ['date','link', 'manchete','text','jornal']
+df_links = df_links.reset_index(drop=True )       
+
+df_html = pd.DataFrame(columns = ["html"])
+
+for i in range(len(df_links)):
+    print("get html:" + str(i) + ' of ' + str(len(df_link)))
+    r = requests.get(df_links['links_brutos'][i])
+    time.sleep(2)
+    df_html = df_html.append({'html': r.content},ignore_index=True)
+            
+df_links = pd.concat([df_links,df_html],axis = 1)   
+  
+columns = ['date','link','html','manchete','text','jornal']
 df_noticias_extra = pd.DataFrame(columns = columns)
 
 for i in range(len(df_links)):
         print("get news:" + str(i)+" of "+str(len(df_links)))
-        link = df_links['links_brutos'][i]
-        time.sleep(2.5)
-        #k = requests.get(link)
-        #if k.ok != True:
-           # i = i+1
-           # link = df_links_only['links_brutos'][i]
-        k = requests.get(link)
+        #link = df_links['links_brutos'][i]
+        #time.sleep(2)
+        k = df_links['html'][i]
         date = get_date(k,jornal = 'extra')
         manchete = get_manchete(k)
         jornal = 'extra' 
-        noticia = boilerpipe_api_article_extract(link)
+        noticia = boilerpipe_api_article_extract(k)
             
         df_noticias_extra =  df_noticias_extra.append({'date': date,
                                               'link': link,
+                                              'html': df_links['html'][i],
                                               'manchete':manchete ,
                                               'text': noticia,
                                               'jornal': jornal
