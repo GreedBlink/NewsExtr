@@ -32,7 +32,7 @@ df_links = df_links.reset_index(drop=True )
 df_html = pd.DataFrame(columns = ["html"])
 
 for i in range(len(df_links)):
-    print("get html:" + str(i) + ' of ' + str(len(df_link)))
+    print("get html:" + str(i) + ' of ' + str(len(df_links)))
     r = requests.get(df_links['links_brutos'][i])
     time.sleep(2)
     df_html = df_html.append({'html': r.content},ignore_index=True)
