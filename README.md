@@ -1,11 +1,11 @@
 # NewsExtr
 
 
-| Mídia  | acessível  |
-|---|---|
-|El país Brasil |  :heavy_check_mark: |  
-|Extra   |  :heavy_check_mark: |   
-|G1   | :x:  |   
-|Blog do Ibre |  :heavy_check_mark: |  
-|Carta Capital |  :x: |  
+| Mídia  | crawler  | extrator
+|---|---|---|
+|El país Brasil |  :heavy_check_mark: | :heavy_check_mark:  |
+|Extra   |  :heavy_check_mark: | :x:  |
+|G1   | :x:  |   |
+|Blog do Ibre |  :heavy_check_mark: | :heavy_check_mark:  |
+|Carta Capital |  :heavy_check_mark: | :x:  |
 
