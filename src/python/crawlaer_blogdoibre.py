@@ -114,4 +114,6 @@ for i in range(len(df_links)):
                                              },ignore_index = True)
 
 
+    
+df_noticias_blogibre.to_csv("../data/noticias_blog_ibre.csv",sep=";",index = False)
 
