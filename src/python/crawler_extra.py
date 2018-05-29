@@ -44,8 +44,6 @@ df_noticias_extra = pd.DataFrame(columns = columns)
 
 for i in range(len(df_links)):
         print("get news:" + str(i)+" of "+str(len(df_links)))
-        #link = df_links['links_brutos'][i]
-        #time.sleep(2)
         k = df_links['html'][i]
         date = get_date(k,jornal = 'extra')
         manchete = get_manchete(k)

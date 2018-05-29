@@ -24,7 +24,7 @@ page = 0
 df_links = pd.DataFrame(columns = ["links_brutos"])
 url_extract = url + '/' + str(page)
 r = requests.get(url_extract)
-while(r.status_code == 200):
+while(r.status_code == 200 or page == 3):
     page = page + 1
     print("get page:" + str(page))
     url_extract = url + '/' + str(page)
@@ -55,7 +55,21 @@ df_links = pd.concat([df_links,df_html],axis = 1)
 columns = ['date','link','html','manchete','text','jornal']
 df_noticias_extra = pd.DataFrame(columns = columns)
 
-
+for i in range(len(df_links)):
+        print("get news:" + str(i)+" of "+str(len(df_links)))
+        k = df_links['html'][i]
+        date = get_date(k,jornal = 'extra')
+        manchete = get_manchete(k)
+        jornal = 'extra' 
+        noticia = boilerpipe_api_article_extract(k)
+            
+        df_noticias_extra =  df_noticias_extra.append({'date': date,
+                                              'link': link,
+                                              'html': df_links['html'][i],
+                                              'manchete':manchete ,
+                                              'text': noticia,
+                                              'jornal': jornal
+                                             },ignore_index = True)
 
 
 

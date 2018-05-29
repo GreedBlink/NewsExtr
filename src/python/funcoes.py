@@ -18,7 +18,7 @@ import time
 
     
     
-def get_date(k, jornal):
+def get_date(k):
     soup = BeautifulSoup(k,'lxml')
     date = soup.find("time")
     date = date.attrs['datetime']
