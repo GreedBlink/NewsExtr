@@ -21,20 +21,22 @@ import time
 
 url = 'https://brasil.elpais.com/seccion/politica'   
 page = 0
-df_links = pd.DataFrame(columns = ["links_brutos"])
+df_links = pd.DataFrame(columns = ["links_brutos","html"])
 url_extract = url + '/' + str(page)
 r = requests.get(url_extract)
-while(r.status_code == 200 or page == 3):
+while(r.status_code == 200):
     page = page + 1
     print("get page:" + str(page))
     url_extract = url + '/' + str(page)
     r = requests.get(url_extract)
     soup = BeautifulSoup(r.content, 'lxml')
+    html = soup
     teste = soup.findAll('a')
     time.sleep(1)
     for i in range(len(teste)):
         if('//brasil.elpais.com/brasil'  in teste[i].attrs['href'] and 'html' in teste[i].attrs['href'] and '?page=' not in teste[i].attrs['href']):
-            df_links =  df_links.append({'links_brutos': 'https:'+ teste[i].attrs['href']},ignore_index=True)
+            df_links =  df_links.append({'links_brutos': 'https:'+ teste[i].attrs['href'],
+                                         'html': html},ignore_index=True)
             
                         
 df_links = df_links.drop_duplicates()
