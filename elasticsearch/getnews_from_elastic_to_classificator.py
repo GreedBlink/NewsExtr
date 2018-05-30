@@ -50,3 +50,7 @@ while (scroll_size > 0):
    df =df.append(df_aux,ignore_index = True)
    print("scroll size: " + str(scroll_size))
    # Do something with the obtained page
+   
+   df = df.sort_index(ascending=False)
+   
+   
