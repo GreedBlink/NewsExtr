@@ -13,7 +13,6 @@ import re
 import numpy  as np
 from readability import Document
 import requests
-from readability.readability import Document
 import time
 
 
@@ -61,19 +60,19 @@ def boilerpipe_api_article_extract(k):
 'https://www.nytimes.com/search?query=Date&sort=newest'
 
 
-url = 'https://www.nytimes.com/search?query=Date&sort=newest'
-page = 1
+url1  = 'https://www.nytimes.com/svc/collections/v1/publish/www.nytimes.com/section/business/economy?q=&sort=newest&page='
+url2 = '&dom=www.nytimes.com&dedupe_hl=y'
+page = 0
 df_links = pd.DataFrame(columns = ["links_brutos"])
-url_extract = url + str(page)
-r = requests.get(url)
+url_extract = url1 + str(page) + url2
+r = requests.get(url_extract)
 while(r.status_code == 200):
     page = page + 1
     print("get page:" + str(page))
-    url_extract = url + str(page)
+    url_extract = url1 + str(page) + url2
     r = requests.get(url_extract)
     soup = BeautifulSoup(r.content, 'lxml')
-    teste = soup.findAll('a')
-    teste2 = teste.find('a')
+    teste = soup.findAll('a',{'class':'story-link'})
     time.sleep(1)
     for i in range(len(teste)):
         if('https://www.nytimes.com'  in teste[i].attrs['href']):
